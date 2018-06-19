@@ -50,6 +50,7 @@ namespace BlogManagement.Controllers
 
         public ActionResult Register()
         {
+            //bcsdsadasdkjsa
             return View();
         }
 
