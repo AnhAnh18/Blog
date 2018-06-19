@@ -19,11 +19,13 @@ namespace BlogManagement.BLL
         public void Add(Category category)
         {
             uow.categoryRepository.Add(category);
+            uow.Save();
         }
 
         public void Delete(Category category)
         {
             uow.categoryRepository.Delete(category);
+            uow.Save();
         }
 
         public Category get(int id)
@@ -39,6 +41,7 @@ namespace BlogManagement.BLL
         public void Update(Category category)
         {
             uow.categoryRepository.Update(category);
+            uow.Save();
         }
     }
 }

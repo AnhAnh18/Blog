@@ -6,7 +6,7 @@
 @model BlogManagement.Models.RegisterModel
 
 <div class="login-form">
-    @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @id = "frmRegister" }))
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @id = "frmRegister" }))
     {
         <h2 class="text-center">Đăng kí</h2>
         <div class="valid-summary">
@@ -15,17 +15,22 @@
         <div class="form-group">
             @Html.TextBoxFor(a => a.Email, new { @class = "form-control", @id = "txtEmail", @required = "required", @placeholder = "Email" })
         </div>
+        <p id="lblEmail" class="text-danger">Message</p>
         <div class="form-group">
-            @Html.TextBoxFor(a => a.codeVerify, new { @class = "form-control", @style="width: 70%; display: inline-block;", @id = "txtCode", @required = "required", @placeholder = "Mã xác nhận" })
-            <input type="button" class="btn btn-success" value="Gửi mã" id="btnSendCode"/>
+            @Html.TextBoxFor(a => a.codeVerify, new { @class = "form-control", @style = "width: 70%; display: inline-block;", @id = "txtCode", @required = "required", @placeholder = "Mã xác nhận" })
+            <input type="button" class="btn btn-success" value="Gửi mã" id="btnSendCode" />
+        </div>
+        <p id="lblVerify">Message</p>
+        <div class="form-group">
+            @Html.TextBoxFor(a => a.UserName, new { @class = "form-control", @id = "txtUserName", @required = "required", @placeholder = "Tên người dùng" })
         </div>
         <div class="form-group">
             @Html.PasswordFor(a => a.PassWord, new { @class = "form-control", @id = "txtPass", @required = "required", @placeholder = "Mật khẩu" })
         </div>
         <div class="form-group">
-            @Html.PasswordFor(a => a.PassWord, new { @class = "form-control", @id = "txtComfirmPass", @required = "required", @placeholder = "Nhắc lại mật khẩu" })
+            @Html.PasswordFor(a => a.ComfirmPass, new { @class = "form-control", @id = "txtConfirmPass", @required = "required", @placeholder = "Nhắc lại mật khẩu" })
         </div>
-        <p id="lblRegister">Message</p>
+        <p id="lblRegister" class="text-danger">Message</p>
         <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block" id="btnRegister">Đăng kí</button>
         </div>

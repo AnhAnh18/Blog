@@ -19,11 +19,13 @@ namespace BlogManagement.BLL
         public void Add(Comment cmt)
         {
             uow.commentRepository.Add(cmt);
+            uow.Save();
         }
 
         public void Delete(Comment cmt)
         {
             uow.commentRepository.Delete(cmt);
+            uow.Save();
         }
 
         public Comment get(int id)
@@ -39,6 +41,7 @@ namespace BlogManagement.BLL
         public void Update(Comment cmt)
         {
             uow.commentRepository.Update(cmt);
+            uow.Save();
         }
     }
 }

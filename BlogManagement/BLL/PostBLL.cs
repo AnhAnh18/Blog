@@ -19,11 +19,13 @@ namespace BlogManagement.BLL
         public void Add(Post post)
         {
             uow.postRepository.Add(post);
+            uow.Save();
         }
 
         public void Delete(Post post)
         {
             uow.postRepository.Delete(post);
+            uow.Save();
         }
 
         public Post get(int id)
@@ -39,7 +41,9 @@ namespace BlogManagement.BLL
         public void Update(Post post)
         {
             uow.postRepository.Update(post);
+            uow.Save();
         }
+
         public IEnumerable<Post> getPostsByAccountId(int id)
         {
             return uow.postRepository.getAll().Where(x => x.AccountId == id);

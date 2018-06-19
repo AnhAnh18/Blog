@@ -15,6 +15,11 @@ namespace BlogManagement.Models
         public String Email { get; set; }
 
         [Required]
+        [StringLength(50)]
+        [Display(Name = "Tên người dùng")]
+        public String UserName { get; set; }
+
+        [Required]
         [StringLength(50, MinimumLength = 6, ErrorMessage = "Mật khẩu phải dài hơn 6 kí tự!")]
         [DataType(DataType.Password)]
         [Display(Name = "Mật khẩu")]

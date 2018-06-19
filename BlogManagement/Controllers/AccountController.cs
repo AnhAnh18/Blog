@@ -1,6 +1,5 @@
 ﻿using BlogManagement.DAL.UnitOfWork;
 using BlogManagement.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,17 +8,19 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using BlogManagement.DAL.Entities;
+using BlogManagement.BLL;
+using System;
 
 namespace BlogManagement.Controllers
 {
     public class AccountController : Controller
     {
 
-        private IUnitOfWork uow;
+        private AccountBLL accountBLL;
 
         public AccountController()
         {
-            uow = new UnitOfWork(new BlogDBContext());
+            accountBLL = new AccountBLL(new UnitOfWork(new BlogDBContext()));
         }
 
         // GET: Account
@@ -50,11 +51,58 @@ namespace BlogManagement.Controllers
 
         public ActionResult Register()
         {
-            //bcsdsadasdkjsa
             return View();
         }
 
-        public void SendMail(String toEmail, int codeVerify)
+        [HttpPost]
+        public ActionResult Register(RegisterModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            if (EmailIsExists(model.Email))
+            {
+                ModelState.AddModelError("", "Email đã tồn tại!");
+                return View(model);
+            }
+            if(model.PassWord != model.ComfirmPass)
+            {
+                ModelState.AddModelError("", "Mật khẩu không khớp!");
+                return View(model);
+            }
+            if((int)Session["code"] != model.codeVerify)
+            {
+                ModelState.AddModelError("", "Mã xác thực không đúng!");
+                return View(model);
+            }
+            Account acc = new Account(1, model.Email, model.UserName, model.PassWord, "user_default.png", false, true);
+            accountBLL.Add(acc);
+            Session.Remove("code");
+            return Redirect("/Account/Login");
+        }
+
+        [HttpPost]
+        public void Send(String email)
+        {
+            Session["code"] = genCode();
+            SendMail(email, (int)Session["code"]);
+        }
+
+        public Boolean EmailIsExists(String email)
+        {
+            Account acc = accountBLL.getByEmail(email);
+            if (acc != null)
+                return true;
+            return false;
+        }
+
+        private int genCode()
+        {
+            return new Random().Next(100000, 1000000);
+        }
+
+        private void SendMail(String toEmail, int codeVerify)
         {
             MailMessage mail = new MailMessage("quan.droidvpn@gmail.com", toEmail);
             SmtpClient client = new SmtpClient();
@@ -71,7 +119,7 @@ namespace BlogManagement.Controllers
 
         private Boolean checkAccount(LoginModel model)
         {
-            Account acc = uow.accountRepository.getByEmail(model.Email);
+            Account acc = accountBLL.getByEmail(model.Email);
             if (acc != null)
                 if (acc.PassWord == model.PassWord)
                     return true;
@@ -80,7 +128,7 @@ namespace BlogManagement.Controllers
 
         private Boolean AccountConfirmed(String email)
         {
-            Account acc = uow.accountRepository.getByEmail(email);
+            Account acc = accountBLL.getByEmail(email);
             if(acc != null)
                 if (acc.EmailConfirmed)
                     return true;

@@ -19,11 +19,13 @@ namespace BlogManagement.BLL
         public void Add(Account acc)
         {
             uow.accountRepository.Add(acc);
+            uow.Save();
         }
 
         public void Delete(Account acc)
         {
             uow.accountRepository.Delete(acc);
+            uow.Save();
         }
 
         public Account getById(int id)
@@ -46,6 +48,7 @@ namespace BlogManagement.BLL
         public void Update(Account acc)
         {
             uow.accountRepository.Update(acc);
+            uow.Save();
         }
 
         public Account getByEmail(string email)
