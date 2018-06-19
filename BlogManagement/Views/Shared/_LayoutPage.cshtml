@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <title>@ViewBag.Title</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link href="~/Content/Style.css" rel="stylesheet" />
+
+    <script src="~/Content/Login.js"></script>
+
+</head>
+<body>
+    @Html.Action("navPartial", "Home")
+    <div class="col-md-3">
+        @RenderPage("_Nav.cshtml")
+    </div>
+    <div class="col-md-9">
+        @RenderBody()
+    </div>
+</body>
+</html>

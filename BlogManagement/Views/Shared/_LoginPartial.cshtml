@@ -1,0 +1,10 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+    <li><a href="@Url.Action("", "")"><span class="glyphicon glyphicon-user"></span>@User.Identity.Name</a></li>
+    <li><a href="/Account/Logout"><span class="glyphicon glyphicon-log-out"></span>Đăng xuất</a></li>
+}
+else
+{
+    <li><a href="/Account/Register"><span class="glyphicon glyphicon-user"></span> Đăng kí</a></li>
+    <li><a href="/Account/Login"><span class="glyphicon glyphicon-log-in"></span> Đăng nhập</a></li>
+}
